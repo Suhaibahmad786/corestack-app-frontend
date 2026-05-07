@@ -7,12 +7,14 @@ const Weather = () => {
   const [error, setError] = useState("");
 
   // FETCH WEATHER
-  const getWeather = async (lat, lon) => {
+const getWeather = async (lat, lon) => {
     try {
+      const API_KEY = "141d5dd506f64fa5fb475ad319f291e3";
+      
+      // ✅ Call OpenWeatherMap directly — NOT your Railway backend!
       const res = await axios.get(
-        `https://app-backend-production-89a2.up.railway.app/api/weather?lat=${lat}&lon=${lon}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
       );
-
       setData(res.data);
       setLoading(false);
     } catch (err) {
