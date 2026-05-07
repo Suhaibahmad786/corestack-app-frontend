@@ -10,7 +10,7 @@ const Weather = () => {
   const getWeather = async (lat, lon) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/weather?lat=${lat}&lon=${lon}`
+        `https://app-backend-production-89a2.up.railway.app/api/weather?lat=${lat}&lon=${lon}`
       );
 
       setData(res.data);
