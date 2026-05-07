@@ -85,7 +85,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/auth/me", {
+        const res = await fetch("https://app-backend-production-89a2.up.railway.app/api/auth/me", {
           credentials: "include",
         });
         if (!res.ok) { navigate("/login"); return; }
@@ -108,7 +108,7 @@ export default function Dashboard() {
 
   // Logout
   const handleLogout = async () => {
-    await fetch("http://localhost:5000/api/auth/logout", { method:"POST", credentials:"include" });
+    await fetch("https://app-backend-production-89a2.up.railway.app/api/auth/logout", { method:"POST", credentials:"include" });
     navigate("/login");
   };
 
@@ -120,7 +120,7 @@ export default function Dashboard() {
     }
     try {
       setSavingProfile(true);
-      const res = await fetch("http://localhost:5000/api/auth/update-profile", {
+      const res = await fetch("https://app-backend-production-89a2.up.railway.app/api/auth/update-profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

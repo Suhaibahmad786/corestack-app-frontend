@@ -62,7 +62,7 @@ export default function Contact() {
       setLoading(true);
       setMessage("");
 
-      const res = await fetch("http://localhost:5000/api/contact/send", {
+      const res = await fetch("https://app-backend-production-89a2.up.railway.app/api/contact/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
