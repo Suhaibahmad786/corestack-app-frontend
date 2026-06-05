@@ -62,7 +62,7 @@ export default function Contact() {
       setLoading(true);
       setMessage("");
 
-      const res = await fetch("https://app-backend-production-89a2.up.railway.app/api/contact/send", {
+      const res = await fetch("http://localhost:5000/api/contact/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -70,10 +70,10 @@ export default function Contact() {
 
       const data = await res.json();
 
-      if (!res.ok) {
-        setMessage(data || "Something went wrong");
-        return;
-      }
+    if (!res.ok) {
+  setMessage(data.message || "Something went wrong");
+  return;
+}
 
       setMessage("Message sent successfully! ✅ We'll get back to you soon.");
       setForm({ name: "", email: "", subject: "", message: "" });
@@ -162,9 +162,21 @@ export default function Contact() {
                 borderRadius: "8px",
                 fontSize: "14px",
                 fontWeight: "600",
-                background: message.includes("✅") ? "#f0fff4" : "#fff5f5",
-                color: message.includes("✅") ? "#276749" : "#c53030",
-                border: `1px solid ${message.includes("✅") ? "#9ae6b4" : "#feb2b2"}`,
+            background:
+  typeof message === "string" && message.includes("✅")
+    ? "#f0fff4"
+    : "#fff5f5",
+
+color:
+  typeof message === "string" && message.includes("✅")
+    ? "#276749"
+    : "#c53030",
+
+border: `1px solid ${
+  typeof message === "string" && message.includes("✅")
+    ? "#9ae6b4"
+    : "#feb2b2"
+}`,
               }}>
                 {message}
               </p>

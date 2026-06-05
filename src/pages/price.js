@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 // 1. THE HEADER COMPONENT (Defined in the same file)
 const Header = () => {
@@ -40,10 +41,36 @@ const Header = () => {
 
 // 2. THE MAIN PRICING PAGE COMPONENT
 const PricingPage = () => {
+ const handleCheckout = async (plan) => {
+
+    try {
+
+      if (plan === "starter") {
+        alert("Starter plan activated!");
+        return;
+      }
+
+      const response = await axios.post(
+        "http://localhost:5000/api/payment/create-checkout-session",
+        {
+          plan,
+        }
+      );
+
+      window.location.href = response.data.url;
+
+    } catch (error) {
+
+      console.log(error);
+      alert("Something went wrong");
+    }
+  };
+
   const pricingPlans = [
     {
       title: "Starter",
       price: "0",
+      planType: "starter",
       features: ["3 Projects", "Basic Support", "1GB Storage"],
       buttonText: "Join for Free",
       isPopular: false,
@@ -51,15 +78,17 @@ const PricingPage = () => {
     {
       title: "Professional",
       price: "29",
+      planType: "professional",
       features: ["Unlimited Projects", "Priority Support", "10GB Storage"],
-      buttonText: "Get Started",
+      buttonText: "Subscribe Now",
       isPopular: true,
     },
     {
       title: "Business",
       price: "99",
+      planType: "business",
       features: ["Enterprise Security", "Custom Domain", "Unlimited Storage"],
-      buttonText: "Contact Sales",
+      buttonText: "Subscribe Now",
       isPopular: false,
     }
   ];
@@ -158,13 +187,17 @@ const PricingPage = () => {
                 </ul>
               </div>
 
-              <button 
-                style={styles.button(plan.isPopular)}
-                onMouseOver={(e) => e.target.style.opacity = '0.9'}
-                onMouseOut={(e) => e.target.style.opacity = '1'}
-              >
-                {plan.buttonText}
-              </button>
+<button 
+  style={styles.button(plan.isPopular)}
+
+  onClick={() => handleCheckout(plan.planType)}
+
+  onMouseOver={(e) => e.target.style.opacity = '0.9'}
+
+  onMouseOut={(e) => e.target.style.opacity = '1'}
+>
+  {plan.buttonText}
+</button>
             </div>
           ))}
         </div>

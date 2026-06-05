@@ -19,7 +19,7 @@ function Signup() {
       setLoading(true);
       setMessage("");
 
-      const res = await fetch("https://app-backend-production-89a2.up.railway.app/api/auth/signup", {
+      const res = await fetch("http://localhost:5000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -53,7 +53,7 @@ function Signup() {
       const user = result.user;
 
       // Send Google user to your backend
-      const res = await fetch("https://app-backend-production-89a2.up.railway.app/api/auth/google", {
+      const res = await fetch("http://localhost:5000/api/auth/google", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

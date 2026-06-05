@@ -7,7 +7,7 @@ import Contact from "./pages/contact";
 import Price from "./pages/price";
 import Weather from "./pages/weather";
 import Courses from "./pages/courses";
-
+import Success from "./pages/success";
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +20,7 @@ function App() {
                <Route path="/price" element={<Price />} />
                <Route path="/weather" element={<Weather />} />
                 <Route path="/courses" element={<Courses />} />
+                <Route path="/success" element={<Success />} />
       </Routes>
 
     </BrowserRouter>
