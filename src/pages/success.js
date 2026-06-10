@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import API_URL from "../config";
 
 export default function PaymentSuccess() {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ export default function PaymentSuccess() {
   useEffect(() => {
     const savePlan = async () => {
       try {
-        await fetch("http://localhost:5000/api/auth/update-plan", {
+        await fetch(`${API_URL}/api/auth/update-plan`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

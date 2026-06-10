@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from "../config";
 
 // 1. THE HEADER COMPONENT (Defined in the same file)
 const Header = () => {
@@ -51,10 +52,11 @@ const PricingPage = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/payment/create-checkout-session",
+        `${API_URL}/api/payment/create-checkout-session`,
         {
           plan,
-        }
+        },
+        { withCredentials: true }
       );
 
       window.location.href = response.data.url;

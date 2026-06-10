@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import API_URL from "../config";
 
 const PricingPlansOnly = ({ user }) => {
   const currentPlan = user?.plan || "free";
@@ -9,7 +10,7 @@ const PricingPlansOnly = ({ user }) => {
     try {
       if (plan === "starter") {
         await axios.put(
-          "http://localhost:5000/api/auth/update-plan",
+          `${API_URL}/api/auth/update-plan`,
           { plan: "free" },
           { withCredentials: true }
         );
@@ -19,7 +20,7 @@ const PricingPlansOnly = ({ user }) => {
 
       if (plan === "trial") {
         const response = await axios.post(
-          "http://localhost:5000/api/payment/create-trial-session",
+          `${API_URL}/api/payment/create-trial-session`,
           {},
           { withCredentials: true }
         );
@@ -28,7 +29,7 @@ const PricingPlansOnly = ({ user }) => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/payment/create-checkout-session",
+        `${API_URL}/api/payment/create-checkout-session`,
         { plan },
         { withCredentials: true }
       );

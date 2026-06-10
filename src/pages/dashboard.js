@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import WeatherWidget from "../components/weather"; // ✅ your existing weather component
 import PricingPage from "../components/plans";
+import API_URL from "../config";
 
 // ─── ICONS ───────────────────────────────────────────────────────────────────
 const Icon = {
@@ -95,7 +96,7 @@ function CoursesTab() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/courses", {
+        const res = await fetch(`${API_URL}/api/courses`, {
           credentials: "include",
         });
         const data = await res.json();
@@ -112,7 +113,7 @@ function CoursesTab() {
   const openCourse = async (id) => {
     try {
       setError("");
-      const res = await fetch(`http://localhost:5000/api/courses/${id}`, {
+      const res = await fetch(`${API_URL}/api/courses/${id}`, {
         credentials: "include",
       });
       const data = await res.json();
@@ -191,7 +192,7 @@ export default function Dashboard() {
 
   try {
     showToast("Uploading...");
-    const res = await fetch("http://localhost:5000/api/upload/avatar", {
+    const res = await fetch(`${API_URL}/api/upload/avatar`, {
       method: "POST",
       credentials: "include",
       body: formData,
@@ -239,7 +240,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/auth/me", { credentials:"include" });
+        const res = await fetch(`${API_URL}/api/auth/me`, { credentials:"include" });
         if (!res.ok) { navigate("/login"); return; }
         const data = await res.json();
         setUser(data);
@@ -257,7 +258,7 @@ export default function Dashboard() {
   };
 
   const handleLogout = async () => {
-    await fetch("http://localhost:5000/api/auth/logout", { method:"POST", credentials:"include" });
+    await fetch(`${API_URL}/api/auth/logout`, { method:"POST", credentials:"include" });
     navigate("/login");
   };
 const handleCancelSubscription = async () => {
@@ -268,7 +269,7 @@ const handleCancelSubscription = async () => {
 
   try {
     const res = await fetch(
-      "http://localhost:5000/api/payment/cancel-subscription",
+      `${API_URL}/api/payment/cancel-subscription`,
       { method: "POST", credentials: "include" }
     );
     const data = await res.json();
@@ -279,7 +280,7 @@ const handleCancelSubscription = async () => {
     }
 
     // ✅ Refetch user immediately
-    const userRes = await fetch("http://localhost:5000/api/auth/me", {
+    const userRes = await fetch(`${API_URL}/api/auth/me`, {
       credentials: "include"
     });
     const userData = await userRes.json();
@@ -296,7 +297,7 @@ const handleCancelSubscription = async () => {
     if (!tempProfile.name || !tempProfile.email) { showToast("Name and email required","error"); return; }
     try {
       setSavingProfile(true);
-      const res = await fetch("http://localhost:5000/api/auth/update-profile", {
+      const res = await fetch(`${API_URL}/api/auth/update-profile`, {
         method:"PUT", headers:{"Content-Type":"application/json"}, credentials:"include",
         body: JSON.stringify({ name:tempProfile.name, email:tempProfile.email }),
       });

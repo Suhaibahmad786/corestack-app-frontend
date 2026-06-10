@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Added Link for the Header
+import { useNavigate, Link } from "react-router-dom";
+import API_URL from "../config";
 
 // --- PART 1: THE HEADER COMPONENT ---
 // This ensures your navigation stays consistent across all pages
@@ -62,7 +63,7 @@ export default function Contact() {
       setLoading(true);
       setMessage("");
 
-      const res = await fetch("http://localhost:5000/api/contact/send", {
+      const res = await fetch(`${API_URL}/api/contact/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
