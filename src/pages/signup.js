@@ -84,6 +84,11 @@ function Signup() {
 
   return (
     <div style={styles.container}>
+      <style>{`
+        input:focus { border-color: #4318ff !important; box-shadow: 0 0 0 2px rgba(67,24,255,0.15) !important; }
+        input:invalid:not(:placeholder-shown) { border-color: #ef4444 !important; }
+        input:-webkit-autofill { -webkit-box-shadow: 0 0 0 30px #fff inset !important; }
+      `}</style>
       <div style={styles.card}>
 
         {/* HEADER */}

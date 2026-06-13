@@ -215,7 +215,7 @@ export default function Dashboard() {
 };
   // Profile
   const [editingProfile, setEditingProfile] = useState(false);
-  const [tempProfile, setTempProfile] = useState({ name:"", email:"" });
+  const [tempProfile, setTempProfile] = useState({ name:"", email:"", phone:"", address:"" });
   const [savingProfile, setSavingProfile] = useState(false);
 
   // Projects
@@ -245,7 +245,7 @@ export default function Dashboard() {
         const data = await res.json();
         setUser(data);
          setUserPlan(data.plan || "free");
-        setTempProfile({ name:data.name, email:data.email });
+        setTempProfile({ name:data.name, email:data.email, phone:data.phone || "", address:data.address || "" });
       } catch { navigate("/login"); }
       finally { setLoadingUser(false); }
     };
@@ -299,7 +299,7 @@ const handleCancelSubscription = async () => {
       setSavingProfile(true);
       const res = await fetch(`${API_URL}/api/auth/update-profile`, {
         method:"PUT", headers:{"Content-Type":"application/json"}, credentials:"include",
-        body: JSON.stringify({ name:tempProfile.name, email:tempProfile.email }),
+        body: JSON.stringify({ name:tempProfile.name, email:tempProfile.email, phone:tempProfile.phone, address:tempProfile.address }),
       });
       const data = await res.json();
       if (!res.ok) { showToast(data||"Update failed","error"); return; }
@@ -557,14 +557,14 @@ const handleCancelSubscription = async () => {
       {!editingProfile && (
         <>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:"16px",marginBottom:"20px"}}>
-            {[{label:"Full Name",value:user?.name},{label:"Email",value:user?.email},{label:"User ID",value:`#${user?.id}`}].map(item=>(
+            {[{label:"Full Name",value:user?.name},{label:"Email",value:user?.email},{label:"Phone",value:user?.phone || "—"},{label:"Address",value:user?.address || "—"},{label:"User ID",value:`#${user?.id}`}].map(item=>(
               <div key={item.label}>
                 <p style={{margin:"0 0 4px 0",fontSize:"11px",fontWeight:"700",color:"#445",textTransform:"uppercase",letterSpacing:"0.08em"}}>{item.label}</p>
                 <p style={{margin:0,fontSize:"14px",color:"#c8cadc"}}>{item.value}</p>
               </div>
             ))}
           </div>
-          <button onClick={()=>{setTempProfile({name:user.name,email:user.email});setEditingProfile(true);}} style={s.outlineBtn}>
+          <button onClick={()=>{setTempProfile({name:user.name,email:user.email,phone:user.phone||"",address:user.address||""});setEditingProfile(true);}} style={s.outlineBtn}>
             {Icon.edit} Edit Profile
           </button>
         </>
@@ -575,6 +575,8 @@ const handleCancelSubscription = async () => {
         <div style={{display:"flex",flexDirection:"column",gap:"14px"}}>
           <Field label="Full Name" value={tempProfile.name} onChange={v=>setTempProfile({...tempProfile,name:v})} placeholder="John Doe"/>
           <Field label="Email" type="email" value={tempProfile.email} onChange={v=>setTempProfile({...tempProfile,email:v})} placeholder="you@email.com"/>
+          <Field label="Phone" type="tel" value={tempProfile.phone} onChange={v=>setTempProfile({...tempProfile,phone:v})} placeholder="+1 234 567 8900"/>
+          <Field label="Address" value={tempProfile.address} onChange={v=>setTempProfile({...tempProfile,address:v})} placeholder="123 Main St, City"/>
           <div style={{display:"flex",gap:"10px",paddingTop:"4px"}}>
             <button onClick={handleUpdateProfile} disabled={savingProfile} style={{...s.primaryBtn,opacity:savingProfile?0.7:1}}>
               {Icon.save} {savingProfile?"Saving...":"Save Changes"}
